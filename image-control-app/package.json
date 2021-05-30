@@ -1,0 +1,25 @@
+{
+  "name": "image-control-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "build": {
+    "npmRebuild": "false"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron .",
+    "build-mac": "electron-builder --mac --x64",
+    "build-win": "electron-builder --win --x64"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^13.0.1",
+    "electron-builder": "^22.10.5",
+    "electron-rebuild": "^2.3.5"
+  },
+  "dependencies": {
+    "sharp": "^0.28.3"
+  }
+}

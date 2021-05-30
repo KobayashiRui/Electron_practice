@@ -12,7 +12,15 @@ function createWindow () {
   win.loadFile('index.html')
 }
 
-app.whenReady().then(createWindow)
+app.whenReady().then(() => {
+  createWindow()
+  // macOS を除き、全ウインドウが閉じられたときに終了します。
+  app.on('activate', () => {
+    if (BrowserWindow.getAllWindows().length === 0) {
+      createWindow()
+    }
+  })
+})
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
@@ -20,8 +28,3 @@ app.on('window-all-closed', () => {
   }
 })
 
-app.on('activate', () => {
-  if (BrowserWindow.getAllWindows().length === 0) {
-    createWindow()
-  }
-})

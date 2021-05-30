@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
+  <title>Electron Natvie File Control</title>
+  <style>
+    body{ background-color:white; }
+    #btn-load{ margin:12px; }
+    #output{ width:100%; height:50px; }
+  </style>
+</head>
+<body>
+<h1>Electron ローカルファイル操作</h1>
+<h2>テキストファイルの読み込み&表示</h2>
+<button type="button" id="btn-txt-load">テキストファイル読み込み</button>
+<textarea id="output-txt"></textarea>
+
+<h2>画像ファイルの読み込み&表示(base64)</h2>
+<button type="button" id="btn-img-load">画像ファイル読み込み</button>
+<img id="output-img"></img>
+
+<h2>ディレクトリの読み込み</h2>
+<button type="button" id="btn-dir-load">ディレクトリ読み込み</button>
+
+<h2>ファイルの出力</h2>
+
+<h2>ディレクトリの出力</h2>
+
+<script>
+const {ipcRenderer} = require('electron');
+//import { ipcRenderer, remote } from 'electron';
+
+document.getElementById('btn-txt-load').addEventListener('click', () => {
+  // メインプロセスを呼び出し
+  ipcRenderer.invoke('txt-file-open')
+    .then((data) => {
+      // キャンセルで閉じた
+      if( data.status === undefined ){
+        return(false);
+      }
+      // ファイルが開けなかった
+      if( ! data.status ){
+        alert(`ファイルが開けませんでした\n${data.message}`);
+        return(false);
+      }
+
+      // ファイルが無事に開けた
+      document.getElementById('output-txt').value = data.text;
+    })
+    .catch((err) => {
+      alert(err);
+    });
+});
+
+document.getElementById('btn-img-load').addEventListener('click', () => {
+  console.log("click")
+  ipcRenderer.invoke('img-file-open')
+    .then((data) => {
+      // キャンセルで閉じた
+      if( data.status === undefined ){
+        return(false);
+      }
+      // ファイルが開けなかった
+      if( ! data.status ){
+        alert(`ファイルが開けませんでした\n${data.message}`);
+        return(false);
+      }
+
+      // ファイルが無事に開けた
+      console.log(data.img_data);
+      console.log(data.array_buffer);
+      document.getElementById('output-img').src=`data:image/${data.type};base64,${data.img_data}`;
+      //document.getElementById('output-txt').value = data.text;
+    })
+    .catch((err) => {
+      alert(err);
+    });
+});
+</script>
+
+</body>
+</html>
