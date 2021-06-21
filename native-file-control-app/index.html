@@ -24,8 +24,9 @@
 <button type="button" id="btn-dir-load">ディレクトリ読み込み</button>
 
 <h2>ファイルの出力</h2>
-
+<button type="button" id="btn-file-output">テキストファイル書き込み</button>
 <h2>ディレクトリの出力</h2>
+<button type="button" id="btn-file-output">ディレクトリの出力</button>
 
 <script>
 const {ipcRenderer} = require('electron');
@@ -77,6 +78,14 @@ document.getElementById('btn-img-load').addEventListener('click', () => {
       alert(err);
     });
 });
+
+document.getElementById('btn-dir-load').addEventListener('click', () => {
+  ipcRenderer.invoke('dir-open')
+    .then((data)=>{
+      console.log("get data")
+      console.log(data)
+    })
+})
 </script>
 
 </body>

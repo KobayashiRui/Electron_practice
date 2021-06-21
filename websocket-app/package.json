@@ -1,5 +1,5 @@
 {
-  "name": "native-file-control-app",
+  "name": "websocket-app",
   "version": "1.0.0",
   "description": "",
   "main": "main.js",
@@ -9,11 +9,7 @@
   },
   "author": "",
   "license": "ISC",
-  "devDependencies": {
-    "devtron": "^1.4.0",
-    "electron": "^13.0.1"
-  },
   "dependencies": {
-    "fs-extra": "^8.1.0"
+    "electron": "^13.1.2"
   }
 }

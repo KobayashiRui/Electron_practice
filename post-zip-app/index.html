@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
+  <title>Electron zip & post</title>
+  <style>
+    body{ background-color:white; }
+    #btn-load{ margin:12px; }
+    #output{ width:100%; height:50px; }
+  </style>
+</head>
+<body>
+  <h1>圧縮&zipファイルのpost送信</h1>
+  <button type="button" id="btn-get-test">get テスト</button>
+  <button type="button" id="btn-post-test">post テスト</button>
+  <button type="button" id="btn-json-test">json post テスト</button>
+  <button type="button" id="btn-send-file">send file</button>
+</body>
+<script>
+const {ipcRenderer} = require('electron');
+
+//get test
+document.getElementById('btn-get-test').addEventListener('click', () => {
+  ipcRenderer.invoke("get-test", {url:"http://127.0.0.1:8080", data:"hello"})
+    .then((data) => {
+      console.log("GET END");
+      console.log(data);
+    })
+    .catch( (error) => {
+      alert(error);
+    })
+})
+
+document.getElementById('btn-post-test').addEventListener('click', () => {
+  ipcRenderer.invoke("post-test", {url:"http://127.0.0.1:8080"})
+    .then((data) => {
+      console.log("POST END");
+      console.log(data);
+    })
+    .catch( (error) => {
+      alert(err);
+    })
+})
+
+
+document.getElementById('btn-send-file').addEventListener('click', () => {
+  ipcRenderer.invoke("send-file", {url:"http://127.0.0.1:8080/send-file"})
+    .then((data) => {
+      console.log("POST END");
+      console.log(data);
+    })
+    .catch( (error) => {
+      alert(err);
+    })
+})
+
+document.getElementById('btn-json-test').addEventListener('click', async () => {
+  const data = {pos:1000, vel:10};
+  try {
+  let response = await fetch('http://127.0.0.1:8080/json-test', {
+    method: 'POST', // or 'PUT'
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data)})
+  console.log("response");
+  console.log(response);
+  }catch (err){
+    console.log("ERROR:", err);
+  }
+})
+
+</script>
+</html>

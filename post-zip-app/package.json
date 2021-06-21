@@ -1,5 +1,5 @@
 {
-  "name": "native-file-control-app",
+  "name": "post-zip-app",
   "version": "1.0.0",
   "description": "",
   "main": "main.js",
@@ -9,11 +9,11 @@
   },
   "author": "",
   "license": "ISC",
-  "devDependencies": {
-    "devtron": "^1.4.0",
-    "electron": "^13.0.1"
-  },
   "dependencies": {
-    "fs-extra": "^8.1.0"
+    "electron": "^13.1.2",
+    "form-data": "^4.0.0",
+    "fs-extra": "^8.1.0",
+    "node-fetch": "^2.6.1",
+    "node-form": "^1.0.18"
   }
 }

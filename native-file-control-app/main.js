@@ -1,6 +1,6 @@
 const { app, ipcMain, BrowserWindow, dialog } = require('electron')
 const path = require('path')
-const fs = require('fs')
+const fs = require('fs-extra')
 
 let mainWin;
 
@@ -127,3 +127,46 @@ ipcMain.handle('img-file-open', async (event) => {
     return({status:false, message:error.message});
   }
 });
+
+ipcMain.handle('dir-open', async (event) => {
+  const paths = dialog.showOpenDialogSync(mainWin, {
+    buttonLabel: '選択',  // 確認ボタンのラベル
+    //filters: [
+    //  { name: 'Image ', extensions: ['png', 'jpg'] },
+    //],
+    properties:[
+      //'openFile',         // ファイルの選択を許可
+      'openDirectory',
+      'createDirectory',  // ディレクトリの作成を許可 (macOS)
+    ]
+  });
+
+  // キャンセルで閉じた場合
+  if( paths === undefined ){
+    return({status: undefined});
+  }
+
+  try{
+    console.log(paths);
+
+    const all_files = fs.readdirSync(paths[0], { withFileTypes: true });
+    console.log(all_files);
+
+    for (const file_data of all_files) {
+      const fp = path.join(paths[0], file_data.name);
+      if (file_data.isDirectory()) {
+        console.log("this is not file")
+      } else {
+        console.log(fp)
+      }
+    }
+    return({
+      status:true,
+      paths:paths,
+      all_files:all_files
+    })
+  }
+  catch(error) {
+    return({status:false, message:error.message});
+  }
+})
