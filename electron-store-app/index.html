@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
+  <title>Electron Store Test</title>
+  <style>
+    body{ background-color:white; }
+  </style>
+</head>
+<body>
+<h1>Electron Store</h1>
+<h2>データセットテスト</h2>
+<button type="button" id="btn-set-data">set data</button>
+<button type="button" id="btn-set-object">set object</button>
+<h2>データセット例1</h2>
+<p>id<input type="text" id="dataset-example1-id"></p>
+<p>名前<input type="text" id="dataset-example1-name"></p>
+<p>年齢<input type="number" id="dataset-example1-age"></p>
+<button type="button" id="btn-dataset-example1">set human data</button>
+
+<h2>データ取得テスト</h2>
+<p>key:<input type="text" id="get-store-key"></p>
+<button type="button" id="btn-get-store">get store</button>
+<p>取得データ</p>
+<div id="get-store-data"></div>
+
+<h2>データ取得例1</h2>
+<select name="name" id="data-read-list"></select>
+
+<h2>データリセット</h2>
+<button type="button" id="btn-reset-store">reset store</button>
+<h2>jsonエディタを表示</h2>
+<button type="button" id="btn-open-store">open editor</button>
+<h2>jsonデータ出力</h2>
+<button type="button" id="json-data-output">json output</button>
+<h2>jsonデータ読み込み</h2>
+<button type="button" id="json-data-input">json input</button>
+
+<script>
+const {ipcRenderer} = require('electron');
+document.getElementById('btn-set-data').addEventListener('click', async () => {
+  const result = await ipcRenderer.invoke('setStoreValue', 'data', 'A')
+  console.log(result)
+});
+
+document.getElementById('btn-set-object').addEventListener('click', async () => {
+  let object_data = {
+    hoge:"hello",
+    fuga:"world",
+    Hoge:100
+  };
+  const result = await ipcRenderer.invoke('setStoreValue', 'object', object_data)
+  console.log(result)
+});
+
+document.getElementById('btn-get-store').addEventListener('click', async () =>{
+  let key = document.getElementById('get-store-key').value;
+  const result = await ipcRenderer.invoke('getStoreValue', key);
+  console.log(result)
+  document.getElementById("get-store-data").textContent = JSON.stringify(result);
+})
+
+document.getElementById('btn-open-store').addEventListener('click', async () =>{
+  const result = await ipcRenderer.invoke('openEditor');
+})
+
+document.getElementById('btn-reset-store').addEventListener('click', async () =>{
+  const result = await ipcRenderer.invoke('resetStore');
+})
+
+document.getElementById('json-data-output').addEventListener('click', async () =>{
+  console.log("json data output")
+  const result = await ipcRenderer.invoke('jsonDataOutput');
+})
+document.getElementById('json-data-input').addEventListener('click', async () =>{
+  console.log("json data input")
+  const result = await ipcRenderer.invoke('jsonDataInput');
+})
+
+document.getElementById('btn-dataset-example1').addEventListener('click', async () =>{
+  let key = document.getElementById('dataset-example1-id').value;
+  let set_data = {
+    name:document.getElementById('dataset-example1-name').value,
+    age: parseInt(document.getElementById('dataset-example1-age').value)
+  }
+  await ipcRenderer.invoke('setStoreValue', 'human_data.'+key, set_data)
+})
+
+
+
+</script>
+
+</body>
+
+</html>

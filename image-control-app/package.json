@@ -4,18 +4,29 @@
   "description": "",
   "main": "main.js",
   "build": {
+    "asarUnpack": [
+      "**/*.node"
+    ],
+    "win": {
+      "target": "nsis"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "electron .",
     "build-mac": "electron-builder --mac --x64",
+    "build-linux": "electron-builder --linux --x64",
     "build-win": "electron-builder --win --x64"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "electron": "^13.0.1",
-    "electron-builder": "^22.10.5",
+    "electron": "^13.1.7",
+    "electron-builder": "^22.11.7",
     "electron-rebuild": "^2.3.5"
   },
   "dependencies": {

@@ -1,0 +1,19 @@
+{
+  "name": "electron-store-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron ."
+  },
+  "devDependencies": {
+    "electron": "^13.1.7",
+    "electron-builder": "^22.11.7"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "electron-store": "^8.0.0"
+  }
+}
