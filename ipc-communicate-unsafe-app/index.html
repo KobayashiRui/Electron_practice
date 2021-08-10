@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Hello World!</title>
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
+</head>
+<body style="background: white;">
+    <h1>Hello IPC</h1>
+    <button type="button" id="send-message-hello">Send1</button>
+    <button type="button" id="send-message-data">Send2</button>
+</body>
+</html>
+
+<script type="text/javascript">
+    const {ipcRenderer} = require('electron')
+
+    document.getElementById("send-message-hello").addEventListener("click", async () => {
+        let result = await ipcRenderer.invoke('hello')
+        console.log(result)
+    })
+
+</script>
