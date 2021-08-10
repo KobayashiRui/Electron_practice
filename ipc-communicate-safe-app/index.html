@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
+    <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'">
+
+    <title>Hello World!</title>
+</head>
+<body>
+    <h1>Hello IPC</h1>
+    <h2>Hello Test</h2>
+    <button type="button" id="send-message-hello">Send1</button>
+    <div id="hello-result"></div>
+
+    <h2>Sum Test</h2>
+    <input type="number" id="sum-data0"> 
+    <input type="number" id="sum-data1">
+    <button type="button" id="send-message-sum">Send2</button>
+    <div id="sum-result"></div>
+    <script src="index.js"></script>
+</body>
+</html>

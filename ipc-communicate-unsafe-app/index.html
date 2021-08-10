@@ -17,7 +17,11 @@
 
     document.getElementById("send-message-hello").addEventListener("click", async () => {
         let result = await ipcRenderer.invoke('hello')
-        console.log(result)
+        console.log("hello:",result)
+    })
+    document.getElementById("send-message-data").addEventListener("click", async () => {
+        let result = await ipcRenderer.invoke('add', 10)
+        console.log("add:", result)
     })
 
 </script>

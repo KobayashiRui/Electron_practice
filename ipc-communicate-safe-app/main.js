@@ -4,9 +4,8 @@ function createWindow () {
   const win = new BrowserWindow({
     width: 800,
     height: 600,
-    webPreferences: {
-      nodeIntegration: true,
-      contextIsolation: false
+    webPreferences: { 
+      preload: __dirname + '/preload.js' //preloadするjs指定
     }
   })
 
@@ -31,9 +30,10 @@ app.on('window-all-closed', () => {
 
 
 ipcMain.handle("hello", (event) => {
-   return "HelloWorld"
+  return "HelloWorld"
 })
 
-ipcMain.handle("add", (event, data) => {
-   return data+10
+ipcMain.on("send-message-sum", (event, data0, data1) => {
+  const win = BrowserWindow.getFocusedWindow();
+  win.webContents.send("sum_result", (data0+data1))
 })
